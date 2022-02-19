@@ -9,7 +9,7 @@ namespace FilmesAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class EnderecoController
+    public class EnderecoController : Controller
     {
         private AppDbContext _context;
         private IMapper _autoM;
@@ -26,6 +26,18 @@ namespace FilmesAPI.Controllers
             _context.Enderecos.Add(endereco);
             _context.SaveChanges();
             return CreatedAtAction(nameof(RetornaEnderecoPorId), new { Id = endereco.Id }, endereco);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult RetornaEnderecoPorId(int id)
+        {
+            Endereco endereco = _context.Enderecos.FirstOrDefault(x => x.Id == id);
+            if(endereco != null)
+            {
+                ReadEnderecoDTO enderecoDTO = _autoM.Map<ReadEnderecoDTO>(endereco);
+                return Ok(enderecoDTO);
+            }
+            return NotFound();
         }
     }
 }
