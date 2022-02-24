@@ -43,7 +43,7 @@ namespace FIlmesAPI.Controllers
             if (cinema != null)
             {
                 ReadCinemaDTO cinemaDTO = _autoM.Map<ReadCinemaDTO>(cinema);
-                return Ok(cinema);
+                return Ok(cinemaDTO);
             }
             return NotFound();
         }
